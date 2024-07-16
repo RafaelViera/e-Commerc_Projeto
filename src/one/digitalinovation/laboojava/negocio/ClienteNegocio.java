@@ -2,6 +2,7 @@ package one.digitalinovation.laboojava.negocio;
 
 import one.digitalinovation.laboojava.basedados.Banco;
 import one.digitalinovation.laboojava.entidade.Cliente;
+import one.digitalinovation.laboojava.utilidade.LeitoraDados;
 
 import java.util.Optional;
 
@@ -31,23 +32,54 @@ public class ClienteNegocio {
      **/
     public Optional<Cliente> consultar(String cpf) {
 
-        if (bancoDados.getCliente().getCpf().equals(cpf)) {
-            return Optional.of(bancoDados.getCliente());
-        } else {
+        for (Cliente cliente : bancoDados.getCliente()) {
+            if (cliente.getCpf().equals(cpf)) {
+               return Optional.of(cliente);
+            } else {
             return Optional.empty();
+            }
+        }
+        return Optional.empty();
+    }
+
+
+    /**
+     * Cadastra um novo cliente.
+     **/
+    public void incluirCliente(){
+        Cliente novoCliente = LeitoraDados.lerCliente();
+
+        boolean clienteRepetido = false;
+        for (Cliente clienteComparativo : bancoDados.getCliente()) {
+            if (novoCliente.getCpf().equals(clienteComparativo.getCpf())){
+                clienteRepetido = true;
+                System.out.println("Cliente já cadastrado.");
+                break;
+            }
+        }
+        if (!clienteRepetido) {
+            this.bancoDados.adicionarCliente(novoCliente);
+            System.out.println("Cliente cadastrado com sucesso");
         }
     }
 
     /**
-     * Cadastra um novo cliente.
-     * @param cliente Novo cliente que terá acesso a aplicação
-     **/
-    //TODO Fazer a inclusão de cliente
-
-    /**
-     * Exclui um cliente específico.
-     * @param cpf CPF do cliente
+     *
+     * @param posicaoExcluir
      */
-    //TODO Fazer a exclusão de cliente
+    public void excluirCliente(int posicaoExcluir){
+        int posic = 1;
+        if (bancoDados.getProdutos().length == 0) {
+            System.out.println("Não há clientes cadastrados");
+        } else {
+            for (Cliente cliente : bancoDados.getCliente()){
+                if (posicaoExcluir == posic){
+                    this.bancoDados.removerCliente(posic);
+                    break;
+                }
+                posic = posic + 1;
+            }
+        }
+    }
 
 }

@@ -1,6 +1,8 @@
 package one.digitalinovation.laboojava.negocio;
 
 import one.digitalinovation.laboojava.basedados.Banco;
+import one.digitalinovation.laboojava.console.Start;
+import one.digitalinovation.laboojava.entidade.Cliente;
 import one.digitalinovation.laboojava.entidade.Cupom;
 import one.digitalinovation.laboojava.entidade.Pedido;
 import one.digitalinovation.laboojava.entidade.Produto;
@@ -61,7 +63,7 @@ public class PedidoNegocio {
         codigo= String.format(codigo, hoje.getYear(), hoje.getMonthValue(), bancoDados.getPedidos().length);
 
         novoPedido.setCodigo(codigo);
-        novoPedido.setCliente(bancoDados.getCliente());
+        novoPedido.setCliente(Start.clienteLogado);
         novoPedido.setTotal(calcularTotal(novoPedido.getProdutos(), cupom));
         bancoDados.adicionarPedido(novoPedido);
         System.out.println("Pedido salvo com sucesso");

@@ -79,12 +79,11 @@ public class Banco {
         pedidos.remove(posicao);
     }
 
-    public void adicionarCliente(){
-
+    public void adicionarCliente(Cliente cliente){
+        clientes.add(cliente);
     }
 
-    public void remover;
-    //TODO Programar os seguintes métodos:
-    // removerCliente
-    // adicionarCliente
+    public void removerCliente(int posicao){
+        clientes.remove(posicao);
+    }
 }

@@ -15,13 +15,14 @@ import java.util.Optional;
  **/
 public class Start {
 
-    private static Cliente clienteLogado = null;
+    public static Cliente clienteLogado = null;
 
     private static Banco banco = new Banco();
 
     private static ClienteNegocio clienteNegocio = new ClienteNegocio(banco);
     private static PedidoNegocio pedidoNegocio = new PedidoNegocio(banco);
     private static ProdutoNegocio produtoNegocio = new ProdutoNegocio(banco);
+
 
     /**
      * Método utilitário para inicializar a aplicação.
@@ -36,29 +37,51 @@ public class Start {
         while(true) {
 
             if (clienteLogado == null) {
+                System.out.println("Fazer LOGIN ou CADASTRO? [login]/[cadastro]");
+                String entrada = LeitoraDados.lerDado();
 
-                System.out.println("Digite o cpf:");
+                switch (entrada) {
+                    case "login":
+                        System.out.println("Digite o cpf:");
 
-                String cpf = "";
-                cpf = LeitoraDados.lerDado();
+                        String cpf = "";
+                        cpf = LeitoraDados.lerDado();
 
-                identificarUsuario(cpf);
+                        identificarUsuario(cpf);
+                        break;
+                    case "cadastro":
+                        clienteNegocio.incluirCliente();
+                        System.out.println("Digite o cpf novamente:");
+
+                        String cpf02 = "";
+                        cpf02 = LeitoraDados.lerDado();
+
+                        identificarUsuario(cpf02);
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
+                }
+
             }
 
             System.out.println("Selecione uma opção:");
-            //TODO Cadastrar Cliente
-            //TODO Excluir cadastro de Cliente
             System.out.println("1 - Cadastrar Livro"); //TRATAMENTO QUANDO DIGITA GENERO NAO EXISTENTE
             System.out.println("2 - Excluir Livro");
-            //TODO Desafio: Consultar Livro(nome)
-            System.out.println("3 - Cadastrar Caderno"); //TRATAMENTO QUANDO DIGITA NUM MATERIAS NAO EXISTENTE
+            System.out.println("3 - Consultar Livro");
+
+            System.out.println("3.5 - Cadastrar Caderno"); //TRATAMENTO QUANDO DIGITA NUM MATERIAS NAO EXISTENTE
             System.out.println("4 - Excluir Caderno");
-            //TODO Desafio: Consultar Caderno(matéria)
+            System.out.println("4.5 - Consultar Caderno");
+
             System.out.println("5 - Fazer pedido");
             System.out.println("6 - Excluir pedido");
-            //TODO Desafio: Consultar Pedido(código)
+
             System.out.println("7 - Listar produtos");
             System.out.println("8 - Listar pedidos");
+
+            System.out.println("8.5 - Cadastrar Cliente");
+            System.out.println("8.8 - Excluir Cliente");
+
             System.out.println("9 - Deslogar");
             System.out.println("10 - Sair");
 
@@ -71,18 +94,26 @@ public class Start {
                     break;
                 case "2":
                     System.out.println("Digite o código do livro: ");
-                    String codigoLivro = LeitoraDados.lerDado();
-                    produtoNegocio.excluir(codigoLivro);
+                    String codigoLivro00 = LeitoraDados.lerDado();
+                    produtoNegocio.excluir(codigoLivro00);
                     break;
                 case "3":
+                    System.out.println("Digite o código do Livro: ");
+                    String codigoLivro = LeitoraDados.lerDado();
+                    produtoNegocio.consultar(codigoLivro);
+                case "3.5":
                     Caderno caderno= LeitoraDados.lerCaderno();
                     produtoNegocio.salvar(caderno);
                     break;
                 case "4":
                     System.out.println("Digite o código do caderno: ");
-                    String codigoCaderno= LeitoraDados.lerDado();
-                    produtoNegocio.excluir(codigoCaderno);
+                    String codigoCaderno00 = LeitoraDados.lerDado();
+                    produtoNegocio.excluir(codigoCaderno00);
                     break;
+                case "4.5":
+                    System.out.println("Digite a código do caderno: ");
+                    String codigoCaderno = LeitoraDados.lerDado();
+                    produtoNegocio.consultar(codigoCaderno);
                 case "5":
                     Pedido pedido = LeitoraDados.lerPedido(banco);
                     Optional<Cupom> cupom = LeitoraDados.lerCupom(banco);
@@ -94,7 +125,7 @@ public class Start {
                     }
                     break;
                 case "6":
-                    System.out.println("Digite o código do pedido");
+                    System.out.println("Digite o código do pedido: ");
                     String codigoPedido = LeitoraDados.lerDado();
                     pedidoNegocio.excluir(codigoPedido);
                     break;
@@ -104,6 +135,12 @@ public class Start {
                 case "8":
                     pedidoNegocio.listarTodos();
                     break;
+                case "8.5":
+                    clienteNegocio.incluirCliente();
+                case "8.8":
+                    System.out.println("Digite a posição do cliente na lista: ");
+                    int posicao = LeitoraDados.lerInt();
+                    clienteNegocio.excluirCliente(posicao);
                 case "9":
                     System.out.println(String.format("Volte sempre %s!", clienteLogado.getNome()));
                     clienteLogado = null;

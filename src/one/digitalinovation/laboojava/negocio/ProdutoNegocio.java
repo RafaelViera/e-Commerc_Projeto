@@ -64,7 +64,7 @@ public class ProdutoNegocio {
             int posicao= 0;
             for (Produto produto : bancoDados.getProdutos()) {
                 if (produto.getCodigo().equals(codigoExcluir)) {
-                    bancoDados.removerProduto(posicao);
+                    this.bancoDados.removerProduto(posicao);
                     break;
                 }
                 posicao= posicao + 1;

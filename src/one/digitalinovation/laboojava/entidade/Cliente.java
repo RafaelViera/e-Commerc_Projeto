@@ -16,10 +16,14 @@ public class Cliente {
      */
     private String cpf;
 
-    //TODO Agora teremos mais de um cliente, então, retirar esse login padrão
-    public Cliente() {
-        this.nome = "Fulano";
-        this.cpf = "123456789011";
+    /**
+     * Construtor do objeto cliente
+     * @param nome
+     * @param cpf
+     */
+    public Cliente(String nome,String cpf) {
+        this.nome = nome;
+        this.cpf = cpf;
     }
 
     public String getNome() {
@@ -40,6 +44,6 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{ nome='" + nome + "'}";
+        return "Cliente{ nome='" + nome + "/" + "cpf= " + cpf + "'}";
     }
 }

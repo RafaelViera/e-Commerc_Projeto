@@ -34,6 +34,12 @@ public final class LeitoraDados {
 		return texto;
 	}
 
+	public static int lerInt(){
+		int numero = scanner.nextInt();
+
+		return numero;
+	}
+
 	/**
 	 * Ler os dados do livro a ser cadastrado.
 	 * @return Um livro a partir dos dados de entrada
@@ -78,13 +84,23 @@ public final class LeitoraDados {
 		return caderno;
 	}
 
-
 	/**
 	 * Ler os dados do cliente e retorna um objeto da classe Cliente apartir destes.
 	 * @return Cliente com os dados de entrada
 	 **/
-	//TODO Método para ler um novo Cliente para cadastro
+	public static Cliente lerCliente(){
+		System.out.println("Cadastrando um novo cliente...");
 
+		System.out.println("Digite o nome do cliente: ");
+		String nome = LeitoraDados.lerDado();
+
+		System.out.println("Digite o seu cpf: ");
+		String cpf = LeitoraDados.lerDado();
+
+		Cliente cliente = new Cliente(nome, cpf);
+
+		return cliente;
+	}
 
 	/**
 	 * Ler os dados do pedido e retorna um objeto a partir destes.
